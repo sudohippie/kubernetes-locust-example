@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: locust-sa-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: locust-sa-job
+    spec:
+      containers:
+        - name: locust-sa-job
+          image: locust:CXGH
+          env:
+            - name: LOCUST_MODE
+              value: standalone
+            - name: LOCUST_OPTS
+              value: '--run-time 1m --users 10 --headless --summary-only'
+            - name: TARGET_HOST
+              value: http://frontend-internal
+      restartPolicy: Never
+  backoffLimit: 4

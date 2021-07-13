@@ -5,8 +5,5 @@ class MyUser(HttpUser):
 
     @task
     def index(self):
-        self.client.get("/")
-    @task
-    def update(self):
-        self.client.get("/guestbook.php?cmd=set&key=messages&value=,JohnDietish,")
+        self.client.get("/en-us/")
 

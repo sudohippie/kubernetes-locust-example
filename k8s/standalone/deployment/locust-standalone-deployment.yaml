@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-sa-dep
+  labels:
+    name: locust-sa-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust-sa-dep
+  template:
+    metadata:
+      labels:
+        app: locust-sa-dep
+    spec:
+      containers:
+        - name: locust-sa-dep
+          image: locust:CXGH
+          env:
+            - name: LOCUST_MODE
+              value: standalone
+            - name: LOCUST_OPTS
+              value: '--run-time 1m --users 10 --headless --summary-only'
+            - name: TARGET_HOST
+              value: http://frontend-internal
+          ports:
+            - name: loc-master-web
+              containerPort: 8089
+              protocol: TCP
